@@ -4,13 +4,19 @@
 
 package com.mycompany.tattooflow;
 
+import com.mycompany.tattooflow.View.TelaInicial;
+
 /**
  *
  * @author marcus.arenhardt
  */
 public class TattooFlow {
+    
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+       TelaInicial tl = new TelaInicial();
+       tl.setVisible(true);
+       
+        
     }
 }
