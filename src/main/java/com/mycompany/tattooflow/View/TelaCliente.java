@@ -216,11 +216,13 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         String data_nasc = txtDataNasc.getText();
         
         Cliente cli = new Cliente();
-        cli.
+        cli.setNome(nome);
+        cli.setCpf(cpf);
+        cli.setEmial(email);
+        cli.setCelular(celular);
+        cli.setData_nasc(data_nasc);
         
-        
-        
-        
+        c.salvar(cli);
     }//GEN-LAST:event_bntSalvarCliActionPerformed
 
 
