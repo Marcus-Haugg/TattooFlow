@@ -20,7 +20,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
      */
     public TelaCliente() {
        initComponents();
-
+       montaTabela();
+       bntVisualizarCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montaTabela();
+            }
+        });
     }
     
     
@@ -225,6 +230,72 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         c.salvar(cli);
     }//GEN-LAST:event_bntSalvarCliActionPerformed
 
+    private void montaTabela() {
+        ArrayList<Cliente> clientes = c.recuperarTodos();
+        if (clientes == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ocorreu um erro ao consultar os clientes", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } else {
+            jTable1.setModel(new javax.swing.table.AbstractTableModel() {
+                @Override
+                public String getColumnName(int column) {
+                    switch (column) {
+                        case 0:
+                            return "ID";
+                        case 1:
+                            return "Nome";
+                        case 2:
+                            return "CPF";
+                        case 3:
+                            return "Email";
+                        case 4:
+                            return "Celular";
+                        case 5:
+                            return "Data de Nasc.";
+                        default:
+                            return "";
+                    }
+                }
+
+                @Override
+                public int getColumnCount() {
+                    return 6;
+                }
+
+                @Override
+                public int getRowCount() {
+                    return clientes.size();
+                }
+
+                @Override
+                public Object getValueAt(int rowIndex, int columnIndex) {
+                    Cliente cli = clientes.get(rowIndex);
+
+                    if (cli != null) {
+                        switch (columnIndex) {
+                            case 0:
+                                return cli.getId();
+                            case 1:
+                                return cli.getNome();
+                            case 2:
+                                return cli.getCpf();
+                            case 3:
+                                return cli.getEmial();
+                            case 4:
+                                return cli.getCelular();
+                            case 5:
+                                return cli.getData_nasc();
+                        }
+                    }
+
+                    return "n/d";
+                }
+            });
+
+            jTable1.getColumnModel().getColumn(0).setMinWidth(40);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntSalvarCli;
