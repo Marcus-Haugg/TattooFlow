@@ -22,15 +22,6 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
     public TelaEstilos() {
         initComponents();
         montaTabela();
-    bntVisualizarEstilos.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            montaTabela();
-        }
-    });
-        
-
-
-  
     }
     /**
      * This method is called from within the constructor to initialize the form.

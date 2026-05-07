@@ -22,11 +22,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     public TelaCliente() {
         initComponents();
         montaTabela();
-        bntVisualizarCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                montaTabela();
-            }
-        });
     }
 
     /**

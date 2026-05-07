@@ -22,11 +22,6 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
     public TelaTatuador() {
         initComponents();
         montaTabela();
-        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                montaTabela();
-            }
-        });
     }
 
     private void montaTabela() {
