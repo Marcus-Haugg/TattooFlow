@@ -4,17 +4,85 @@
  */
 package com.mycompany.tattooflow.View;
 
+import com.mycompany.tattooflow.Controller.TatuadorController;
+import com.mycompany.tattooflow.Model.Tatuador;
+import java.util.ArrayList;
+
 /**
  *
  * @author marcus.arenhardt
  */
 public class TelaTatuador extends javax.swing.JInternalFrame {
 
+    TatuadorController tc = new TatuadorController();
+
     /**
      * Creates new form TelaTatuador
      */
     public TelaTatuador() {
         initComponents();
+        montaTabela();
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montaTabela();
+            }
+        });
+    }
+
+    private void montaTabela() {
+        ArrayList<Tatuador> tatuadores = tc.recuperarTodos();
+        if (tatuadores == null) {
+
+        } else {
+            jTable1.setModel(new javax.swing.table.AbstractTableModel() {
+                @Override
+                public String getColumnName(int column) {
+                    switch (column) {
+                        case 0:
+                            return "ID";
+                        case 1:
+                            return "Nome";
+                        case 2:
+                            return "Email";
+                        case 3:
+                            return "Celular";
+                        default:
+                            return "";
+                    }
+                }
+
+                @Override
+                public int getColumnCount() {
+                    return 4;
+                }
+
+                @Override
+                public int getRowCount() {
+                    return tatuadores.size();
+                }
+
+                @Override
+                public Object getValueAt(int rowIndex, int columnIndex) {
+                    Tatuador tat = tatuadores.get(rowIndex);
+                    if (tat != null) {
+                        switch (columnIndex) {
+                            case 0:
+                                return tat.getId();
+                            case 1:
+                                return tat.getNome();
+                            case 2:
+                                return tat.getEmail();
+                            case 3:
+                                return tat.getCelular();
+                        }
+                    }
+                    return "n/d";
+                }
+            });
+            jTable1.getColumnModel().getColumn(0).setMinWidth(40);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
     }
 
     /**
@@ -39,6 +107,7 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnVisualizar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -49,6 +118,11 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         jLabel3.setText("Celular:");
 
         bntSalvar.setText("Salvar");
+        bntSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,6 +184,18 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         btnVisualizar.setText("Visualizar");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -119,18 +205,22 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnVisualizar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVisualizar)
+                    .addComponent(btnExcluir))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(168, 168, 168)
+                .addGap(121, 121, 121)
                 .addComponent(btnVisualizar)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnExcluir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Visualização", jPanel2);
@@ -139,7 +229,7 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +239,48 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVisualizarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        String idString = String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        int id = Integer.parseInt(idString);
+        boolean retorno = tc.excluir(id);
+        if (retorno) {
+
+            montaTabela();
+        }
+
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void bntSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarActionPerformed
+        Tatuador tat = new Tatuador();
+        String nome = txtNomeTatuador.getText();
+        String email = txtEmailTatuador1.getText();
+        String celular = txtCelularTatuador.getText();
+
+        tat.setNome(nome);
+        tat.setEmail(email);
+        tat.setCelular(celular);
+
+        boolean retorno = tc.salvar(tat);
+        if (retorno) {
+            txtNomeTatuador.setText("");
+            txtEmailTatuador1.setText("");
+            txtCelularTatuador.setText("");
+            txtNomeTatuador.requestFocus();
+            montaTabela();
+        }
+
+
+    }//GEN-LAST:event_bntSalvarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntSalvar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

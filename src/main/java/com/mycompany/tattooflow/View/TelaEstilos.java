@@ -4,19 +4,34 @@
  */
 package com.mycompany.tattooflow.View;
 
+import com.mycompany.tattooflow.Controller.EstiloController;
+import com.mycompany.tattooflow.Model.Estilo;
+import java.util.ArrayList;
+
+
 /**
  *
  * @author marcus.arenhardt
  */
 public class TelaEstilos extends javax.swing.JInternalFrame {
+    EstiloController ec = new EstiloController();
 
     /**
      * Creates new form TelaEstilos
      */
     public TelaEstilos() {
         initComponents();
-    }
+        montaTabela();
+    bntVisualizarEstilos.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            montaTabela();
+        }
+    });
+        
 
+
+  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,12 +50,18 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         bntVisualizarEstilos = new javax.swing.JButton();
+        bntExcluir = new javax.swing.JButton();
 
         setClosable(true);
 
         jLabel1.setText("Nome do Estilo:");
 
         bntSalvarEstilo.setText("Salvar");
+        bntSalvarEstilo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntSalvarEstiloActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,6 +108,13 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
 
         bntVisualizarEstilos.setText("Visualizar");
 
+        bntExcluir.setText("Excluir");
+        bntExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -95,7 +123,9 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntVisualizarEstilos)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bntVisualizarEstilos)
+                    .addComponent(bntExcluir))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -106,8 +136,10 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addComponent(bntVisualizarEstilos)))
+                        .addGap(103, 103, 103)
+                        .addComponent(bntVisualizarEstilos)
+                        .addGap(18, 18, 18)
+                        .addComponent(bntExcluir)))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
@@ -117,7 +149,7 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,8 +159,80 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bntSalvarEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarEstiloActionPerformed
+        Estilo e = new Estilo();
+    String nomeEstilo = txtNomeEstilos.getText();
+
+    e.setNomeEstilo(nomeEstilo);
+
+    boolean retorno = ec.salvar(e);
+    if (retorno) {
+        
+        txtNomeEstilos.setText("");
+        txtNomeEstilos.requestFocus();
+        montaTabela();
+    } else {
+       
+    }
+    }//GEN-LAST:event_bntSalvarEstiloActionPerformed
+
+    private void bntExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirActionPerformed
+        String idString = String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+    int id = Integer.parseInt(idString);
+    boolean retorno = ec.excluir(id);
+    if (retorno) {
+    
+        montaTabela();
+    } else {
+       
+    }
+    }//GEN-LAST:event_bntExcluirActionPerformed
+
+    private void montaTabela() {
+    ArrayList<Estilo> estilos = ec.recuperarTodos();
+    if (estilos == null) {
+        
+    } else {
+        jTable1.setModel(new javax.swing.table.AbstractTableModel() {
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0: return "ID";
+                    case 1: return "Nome do Estilo";
+                    default: return "";
+                }
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 2;
+            }
+
+            @Override
+            public int getRowCount() {
+                return estilos.size();
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                Estilo e = estilos.get(rowIndex);
+                if (e != null) {
+                    switch (columnIndex) {
+                        case 0: return e.getId();
+                        case 1: return e.getNomeEstilo();
+                    }
+                }
+                return "n/d";
+            }
+        });
+        jTable1.getColumnModel().getColumn(0).setMinWidth(40);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+    }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntExcluir;
     private javax.swing.JButton bntSalvarEstilo;
     private javax.swing.JButton bntVisualizarEstilos;
     private javax.swing.JLabel jLabel1;

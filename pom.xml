@@ -10,4 +10,12 @@
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>com.mycompany.tattooflow.TattooFlow</exec.mainClass>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.10</version>
+        </dependency>
+    </dependencies>
 </project>

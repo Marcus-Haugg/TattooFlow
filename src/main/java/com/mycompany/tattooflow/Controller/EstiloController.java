@@ -4,44 +4,44 @@
  */
 package com.mycompany.tattooflow.Controller;
 
-import com.mycompany.tattooflow.Model.Cliente;
-import com.mycompany.tattooflow.Model.DAO.ClienteDAO;
+import com.mycompany.tattooflow.Model.Estilo;
+import com.mycompany.tattooflow.Model.DAO.EstiloDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  *
- * @author marcus.arenhardt
+ * @author marcus
  */
-public class ClienteController {
+public class EstiloController {
 
-    ClienteDAO cDAO = new ClienteDAO();
+    EstiloDAO estiloDAO = new EstiloDAO();
 
-    public boolean salvar(Cliente c) {
+    public boolean salvar(Estilo e) {
         try {
-            cDAO.salvar(c);
+            estiloDAO.salvar(e);
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao salvar cliente: " + ex.getMessage());
+            System.out.println("Erro ao salvar estilo: " + ex.getMessage());
             return false;
         }
     }
 
-    public ArrayList<Cliente> recuperarTodos() {
+    public ArrayList<Estilo> recuperarTodos() {
         try {
-            return cDAO.recuperarTodos();
+            return estiloDAO.recuperarTodos();
         } catch (SQLException ex) {
-            System.out.println("Erro ao recuperar clientes: " + ex.getMessage());
+            System.out.println("Erro ao recuperar estilos: " + ex.getMessage());
             return null;
         }
     }
 
     public boolean excluir(int id) {
         try {
-            cDAO.excluir(id);
+            estiloDAO.excluir(id);
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao excluir cliente: " + ex.getMessage());
+            System.out.println("Erro ao excluir estilo: " + ex.getMessage());
             return false;
         }
     }

@@ -12,7 +12,7 @@ public class Cliente {
     private int id;
     private String nome;
     private String cpf;
-    private String emial;
+    private String email;
     private String celular;
     private String data_nasc;   
 
@@ -40,12 +40,12 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getEmial() {
-        return emial;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmial(String emial) {
-        this.emial = emial;
+    public void setEmail(String emial) {
+        this.email = emial;
     }
 
     public String getCelular() {

@@ -12,7 +12,7 @@ public class Tatuador {
     
     private int id;
     private String nome;
-    private String emial;
+    private String email;
     private String celular;
 
     public int getId() {
@@ -31,12 +31,12 @@ public class Tatuador {
         this.nome = nome;
     }
 
-    public String getEmial() {
-        return emial;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmial(String emial) {
-        this.emial = emial;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCelular() {

@@ -13,22 +13,21 @@ import java.util.ArrayList;
  * @author marcus.arenhardt
  */
 public class TelaCliente extends javax.swing.JInternalFrame {
+
     ClienteController c = new ClienteController();
 
     /**
      * Creates new form TelaClientes
      */
     public TelaCliente() {
-       initComponents();
-       montaTabela();
-       bntVisualizarCli.addActionListener(new java.awt.event.ActionListener() {
+        initComponents();
+        montaTabela();
+        bntVisualizarCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 montaTabela();
             }
         });
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,6 +60,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         bntVisualizarCli = new javax.swing.JButton();
+        bntExcluirCli = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -167,6 +167,13 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         bntVisualizarCli.setText("Visualizar");
 
+        bntExcluirCli.setText("Excluir");
+        bntExcluirCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluirCliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -174,20 +181,23 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(bntVisualizarCli)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bntVisualizarCli)
+                    .addComponent(bntExcluirCli))
+                .addGap(38, 38, 38))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(bntVisualizarCli)))
+                        .addGap(113, 113, 113)
+                        .addComponent(bntVisualizarCli)
+                        .addGap(18, 18, 18)
+                        .addComponent(bntExcluirCli)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -213,22 +223,42 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntSalvarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarCliActionPerformed
-        
+        Cliente cli = new Cliente();
         String nome = txtNomeCli.getText();
         String cpf = txtCpfCli.getText();
         String email = txtEmailCli.getText();
         String celular = txtCelularCli.getText();
         String data_nasc = txtDataNasc.getText();
-        
-        Cliente cli = new Cliente();
+
         cli.setNome(nome);
         cli.setCpf(cpf);
-        cli.setEmial(email);
+        cli.setEmail(email);
         cli.setCelular(celular);
         cli.setData_nasc(data_nasc);
-        
-        c.salvar(cli);
+
+        boolean retorno = c.salvar(cli);
+        if (retorno) {
+            txtNomeCli.setText("");
+            txtCpfCli.setText("");
+            txtEmailCli.setText("");
+            txtCelularCli.setText("");
+            txtDataNasc.setText("");
+            txtNomeCli.requestFocus();
+
+            montaTabela();
+        }
+
+
     }//GEN-LAST:event_bntSalvarCliActionPerformed
+
+    private void bntExcluirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirCliActionPerformed
+        String idString = String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        int id = Integer.parseInt(idString);
+        boolean retorno = c.excluir(id);
+        if (retorno) {
+            montaTabela();
+        }
+    }//GEN-LAST:event_bntExcluirCliActionPerformed
 
     private void montaTabela() {
         ArrayList<Cliente> clientes = c.recuperarTodos();
@@ -279,7 +309,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                             case 2:
                                 return cli.getCpf();
                             case 3:
-                                return cli.getEmial();
+                                return cli.getEmail();
                             case 4:
                                 return cli.getCelular();
                             case 5:
@@ -298,6 +328,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntExcluirCli;
     private javax.swing.JButton bntSalvarCli;
     private javax.swing.JButton bntVisualizarCli;
     private javax.swing.JLabel jLabel1;
@@ -321,6 +352,5 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextPane txtEmailCli;
     private javax.swing.JTextPane txtNomeCli;
     // End of variables declaration//GEN-END:variables
-
 
 }
