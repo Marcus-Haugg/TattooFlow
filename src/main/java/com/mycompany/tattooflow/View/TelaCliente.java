@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TelaCliente extends javax.swing.JInternalFrame {
 
     ClienteController c = new ClienteController();
+    private int idEditando = -1; // -1 significa que não está editando
 
     /**
      * Creates new form TelaClientes
@@ -56,6 +57,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         bntVisualizarCli = new javax.swing.JButton();
         bntExcluirCli = new javax.swing.JButton();
+        bntEditar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -169,6 +171,13 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        bntEditar.setText("Editar");
+        bntEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -179,7 +188,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bntVisualizarCli)
-                    .addComponent(bntExcluirCli))
+                    .addComponent(bntExcluirCli)
+                    .addComponent(bntEditar))
                 .addGap(38, 38, 38))
         );
         jPanel2Layout.setVerticalGroup(
@@ -192,7 +202,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                         .addGap(113, 113, 113)
                         .addComponent(bntVisualizarCli)
                         .addGap(18, 18, 18)
-                        .addComponent(bntExcluirCli)))
+                        .addComponent(bntExcluirCli)
+                        .addGap(18, 18, 18)
+                        .addComponent(bntEditar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -219,19 +231,24 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
     private void bntSalvarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarCliActionPerformed
         Cliente cli = new Cliente();
-        String nome = txtNomeCli.getText();
-        String cpf = txtCpfCli.getText();
-        String email = txtEmailCli.getText();
-        String celular = txtCelularCli.getText();
-        String data_nasc = txtDataNasc.getText();
+        cli.setNome(txtNomeCli.getText());
+        cli.setCpf(txtCpfCli.getText());
+        cli.setEmail(txtEmailCli.getText());
+        cli.setCelular(txtCelularCli.getText());
+        cli.setData_nasc(txtDataNasc.getText());
 
-        cli.setNome(nome);
-        cli.setCpf(cpf);
-        cli.setEmail(email);
-        cli.setCelular(celular);
-        cli.setData_nasc(data_nasc);
+        boolean retorno;
 
-        boolean retorno = c.salvar(cli);
+        if (idEditando != -1) {
+            // Está editando
+            cli.setId(idEditando);
+            retorno = c.editar(cli);
+            idEditando = -1; // reseta após editar
+        } else {
+            // Está salvando novo
+            retorno = c.salvar(cli);
+        }
+
         if (retorno) {
             txtNomeCli.setText("");
             txtCpfCli.setText("");
@@ -239,7 +256,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             txtCelularCli.setText("");
             txtDataNasc.setText("");
             txtNomeCli.requestFocus();
-
             montaTabela();
         }
 
@@ -254,6 +270,26 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             montaTabela();
         }
     }//GEN-LAST:event_bntExcluirCliActionPerformed
+
+    private void bntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente para editar!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Pega os dados da linha selecionada e preenche os campos
+        txtNomeCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 1)));
+        txtCpfCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 2)));
+        txtEmailCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 3)));
+        txtCelularCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 4)));
+        txtDataNasc.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 5)));
+
+        // Guarda o ID e troca para a aba de cadastro
+        idEditando = Integer.parseInt(String.valueOf(jTable1.getValueAt(linhaSelecionada, 0)));
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_bntEditarActionPerformed
 
     private void montaTabela() {
         ArrayList<Cliente> clientes = c.recuperarTodos();
@@ -323,6 +359,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntEditar;
     private javax.swing.JButton bntExcluirCli;
     private javax.swing.JButton bntSalvarCli;
     private javax.swing.JButton bntVisualizarCli;

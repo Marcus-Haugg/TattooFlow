@@ -6,6 +6,7 @@ package com.mycompany.tattooflow;
 
 import com.mycompany.tattooflow.View.TelaInicial;
 import apoio.ConexaoBD;
+import com.mycompany.tattooflow.View.TelaLogin;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -19,7 +20,7 @@ public class TattooFlow {
     public static void main(String[] args) {
     try {
         ConexaoBD.getInstance().getConnection();
-        TelaInicial tl = new TelaInicial();
+        TelaLogin tl = new TelaLogin();
         tl.setVisible(true);
     } catch (Exception e) {
         System.out.println(e);

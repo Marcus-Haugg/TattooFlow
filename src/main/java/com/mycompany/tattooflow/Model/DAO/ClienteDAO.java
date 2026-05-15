@@ -56,5 +56,17 @@ public class ClienteDAO {
         System.out.println("sql: " + sql);
         ConexaoBD.executeUpdate(sql);
     }
+    
+    public void editar(Cliente c) throws SQLException {
+    String sql = "UPDATE clientes SET "
+            + "nome = '" + c.getNome() + "',"
+            + "cpf = '" + c.getCpf() + "',"
+            + "email = '" + c.getEmail() + "',"
+            + "celular = '" + c.getCelular() + "',"
+            + "data_nasc = '" + c.getData_nasc() + "'"
+            + " WHERE id = " + c.getId();
+    System.out.println("sql: " + sql);
+    ConexaoBD.executeUpdate(sql);
+}
 
 }

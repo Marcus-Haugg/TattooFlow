@@ -45,5 +45,15 @@ public class ClienteController {
             return false;
         }
     }
+    
+    public boolean editar(Cliente c) {
+    try {
+        cDAO.editar(c);
+        return true;
+    } catch (SQLException ex) {
+        System.out.println("Erro ao editar cliente: " + ex.getMessage());
+    }
+    return false;
+}
 
 }
