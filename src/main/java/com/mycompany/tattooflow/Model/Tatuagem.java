@@ -9,9 +9,10 @@ package com.mycompany.tattooflow.Model;
  * @author marcus.arenhardt
  */
 public class Tatuagem {
-    
+
     private int id;
     private int estiloId;
+    private int tatuadorId;
     private String descricao;
     private String dataCriacao;
 
@@ -46,5 +47,13 @@ public class Tatuagem {
     public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-    
+
+    public int getTatuadorId() {
+        return tatuadorId;
+    }
+
+    public void setTatuadorId(int tatuadorId) {
+        this.tatuadorId = tatuadorId;
+    }
+
 }

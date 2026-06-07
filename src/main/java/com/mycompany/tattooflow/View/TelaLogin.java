@@ -46,6 +46,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
         txtUsuario.addActionListener(this::txtUsuarioActionPerformed);
 
+        psdSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                psdSenhaKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Usuário:");
 
         jLabel3.setText("Senha:");
@@ -113,6 +119,12 @@ public class TelaLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "E-mail ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_bntAcessarActionPerformed
+
+    private void psdSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_psdSenhaKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+        bntAcessarActionPerformed(null);
+    }
+    }//GEN-LAST:event_psdSenhaKeyPressed
 
     /**
      * @param args the command line arguments

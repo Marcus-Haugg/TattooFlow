@@ -4,17 +4,28 @@
  */
 package com.mycompany.tattooflow.View;
 
+import apoio.ComboItem;
+import com.mycompany.tattooflow.Controller.SessaoController;
+import com.mycompany.tattooflow.Model.DAO.CombosDAO;
+import com.mycompany.tattooflow.Model.Sessao;
+import java.util.ArrayList;
+
 /**
  *
  * @author marcus.arenhardt
  */
 public class TelaSessao extends javax.swing.JInternalFrame {
 
+    SessaoController sc = new SessaoController();
+    CombosDAO combosDAO = new CombosDAO();
+    private int idEditando = -1;
+
     /**
      * Creates new form TelaSessao
      */
     public TelaSessao() {
         initComponents();
+        montaTabela();
     }
 
     /**
@@ -35,10 +46,18 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         txtDuracaoMinSessao = new javax.swing.JTextField();
         txtDescSessao = new javax.swing.JTextField();
         bntSalvarSessao = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        cmbTatuador = new javax.swing.JComboBox<>();
+        cmbCliente = new javax.swing.JComboBox<>();
+        cmbTatuagem = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         bntVisualizarSessoes = new javax.swing.JButton();
+        bntEditar = new javax.swing.JButton();
+        bntExcluir1 = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -49,26 +68,90 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         jLabel3.setText("Descrição:");
 
         bntSalvarSessao.setText("Salvar");
+        bntSalvarSessao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntSalvarSessaoActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Cliente");
+
+        jLabel5.setText("Tatuador");
+
+        jLabel6.setText("Tatuagem");
+
+        cmbTatuador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTatuador.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbTatuadorPopupMenuWillBecomeVisible(evt);
+            }
+        });
+
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCliente.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbClientePopupMenuWillBecomeVisible(evt);
+            }
+        });
+
+        cmbTatuagem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTatuagem.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbTatuagemPopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataHoraSessao))
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDataHoraSessao))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDuracaoMinSessao, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDescSessao)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel5)
+                                        .addGap(164, 164, 164)
+                                        .addComponent(jLabel6)
+                                        .addGap(28, 28, 28))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(cmbTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDescSessao))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDuracaoMinSessao, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
+                        .addGap(52, 52, 52)
+                        .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(149, 149, 149)
+                        .addComponent(cmbTatuador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(bntSalvarSessao)))
@@ -89,9 +172,19 @@ public class TelaSessao extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtDescSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbTatuador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(68, 68, 68)
                 .addComponent(bntSalvarSessao)
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastrar", jPanel1);
@@ -110,6 +203,25 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         bntVisualizarSessoes.setText("Visualizar");
+        bntVisualizarSessoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntVisualizarSessoesActionPerformed(evt);
+            }
+        });
+
+        bntEditar.setText("Editar");
+        bntEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntEditarActionPerformed(evt);
+            }
+        });
+
+        bntExcluir1.setText("Excluir");
+        bntExcluir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluir1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -118,7 +230,10 @@ public class TelaSessao extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntVisualizarSessoes)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bntVisualizarSessoes)
+                    .addComponent(bntEditar)
+                    .addComponent(bntExcluir1))
                 .addGap(0, 23, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -127,8 +242,12 @@ public class TelaSessao extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(179, 179, 179)
+                .addGap(156, 156, 156)
                 .addComponent(bntVisualizarSessoes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bntExcluir1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bntEditar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -138,7 +257,7 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,13 +267,173 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbClientePopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbClientePopupMenuWillBecomeVisible
+        combosDAO.popularCombo("clientes", cmbCliente);
+    }//GEN-LAST:event_cmbClientePopupMenuWillBecomeVisible
+
+    private void cmbTatuadorPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbTatuadorPopupMenuWillBecomeVisible
+        combosDAO.popularCombo("tatuadores", cmbTatuador);
+    }//GEN-LAST:event_cmbTatuadorPopupMenuWillBecomeVisible
+
+    private void cmbTatuagemPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbTatuagemPopupMenuWillBecomeVisible
+        combosDAO.popularCombo("tatuagens", cmbTatuagem);
+    }//GEN-LAST:event_cmbTatuagemPopupMenuWillBecomeVisible
+
+    private void bntSalvarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarSessaoActionPerformed
+        ComboItem clienteSelecionado = (ComboItem) cmbCliente.getSelectedItem();
+        ComboItem tatuadorSelecionado = (ComboItem) cmbTatuador.getSelectedItem();
+        ComboItem tatuagemSelecionada = (ComboItem) cmbTatuagem.getSelectedItem();
+
+        if (clienteSelecionado == null || clienteSelecionado.getCodigo() == 0
+                || tatuadorSelecionado == null || tatuadorSelecionado.getCodigo() == 0
+                || tatuagemSelecionada == null || tatuagemSelecionada.getCodigo() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione cliente, tatuador e tatuagem!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Sessao s = new Sessao();
+        s.setClienteId(clienteSelecionado.getCodigo());
+        s.setTatuadorId(tatuadorSelecionado.getCodigo());
+        s.setTatuagenId(tatuagemSelecionada.getCodigo());
+        s.setDataHora(txtDataHoraSessao.getText());
+        s.setDuracaoMinutos(txtDuracaoMinSessao.getText());
+        s.setDescricao(txtDescSessao.getText());
+
+        boolean retorno;
+
+        if (idEditando != -1) {
+            s.setId(idEditando);
+            retorno = sc.editar(s);
+            idEditando = -1;
+        } else {
+            retorno = sc.salvar(s);
+        }
+
+        if (retorno) {
+            txtDataHoraSessao.setText("");
+            txtDuracaoMinSessao.setText("");
+            txtDescSessao.setText("");
+            txtDataHoraSessao.requestFocus();
+            montaTabela();
+        }else{
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar sessão!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bntSalvarSessaoActionPerformed
+
+    private void bntVisualizarSessoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVisualizarSessoesActionPerformed
+        montaTabela();
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_bntVisualizarSessoesActionPerformed
+
+    private void bntExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluir1ActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma sessão para excluir!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String idString = String.valueOf(jTable1.getValueAt(linhaSelecionada, 0));
+        int id = Integer.parseInt(idString);
+        boolean retorno = sc.excluir(id);
+        if (retorno) {
+            montaTabela();
+        }
+    }//GEN-LAST:event_bntExcluir1ActionPerformed
+
+    private void bntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma sessão para editar!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        txtDataHoraSessao.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 4)));
+        txtDuracaoMinSessao.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 5)));
+        txtDescSessao.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 6)));
+        idEditando = Integer.parseInt(String.valueOf(jTable1.getValueAt(linhaSelecionada, 0)));
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_bntEditarActionPerformed
+
+    private void montaTabela() {
+        ArrayList<Sessao> sessoes = sc.recuperarTodos();
+        if (sessoes == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ocorreu um erro ao consultar as sessões", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } else {
+            jTable1.setModel(new javax.swing.table.AbstractTableModel() {
+                @Override
+                public String getColumnName(int column) {
+                    switch (column) {
+                        case 0:
+                            return "ID";
+                        case 1:
+                            return "Cliente ID";
+                        case 2:
+                            return "Tatuador ID";
+                        case 3:
+                            return "Tatuagem ID";
+                        case 4:
+                            return "Data e Hora";
+                        case 5:
+                            return "Duração (min)";
+                        case 6:
+                            return "Descrição";
+                        default:
+                            return "";
+                    }
+                }
+
+                @Override
+                public int getColumnCount() {
+                    return 7;
+                }
+
+                @Override
+                public int getRowCount() {
+                    return sessoes.size();
+                }
+
+                @Override
+                public Object getValueAt(int rowIndex, int columnIndex) {
+                    Sessao s = sessoes.get(rowIndex);
+                    if (s != null) {
+                        switch (columnIndex) {
+                            case 0:
+                                return s.getId();
+                            case 1:
+                                return s.getClienteId();
+                            case 2:
+                                return s.getTatuadorId();
+                            case 3:
+                                return s.getTatuagenId();
+                            case 4:
+                                return s.getDataHora();
+                            case 5:
+                                return s.getDuracaoMinutos();
+                            case 6:
+                                return s.getDescricao();
+                        }
+                    }
+                    return "n/d";
+                }
+            });
+            jTable1.getColumnModel().getColumn(0).setMinWidth(40);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntEditar;
+    private javax.swing.JButton bntExcluir1;
     private javax.swing.JButton bntSalvarSessao;
     private javax.swing.JButton bntVisualizarSessoes;
+    private javax.swing.JComboBox<String> cmbCliente;
+    private javax.swing.JComboBox<String> cmbTatuador;
+    private javax.swing.JComboBox<String> cmbTatuagem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

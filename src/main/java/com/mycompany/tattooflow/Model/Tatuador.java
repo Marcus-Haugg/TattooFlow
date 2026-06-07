@@ -9,7 +9,7 @@ package com.mycompany.tattooflow.Model;
  * @author marcus.arenhardt
  */
 public class Tatuador {
-    
+
     private int id;
     private String nome;
     private String email;
@@ -46,4 +46,6 @@ public class Tatuador {
     public void setCelular(String celular) {
         this.celular = celular;
     }
+
+
 }

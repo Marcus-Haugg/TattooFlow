@@ -9,7 +9,7 @@ package com.mycompany.tattooflow.Model;
  * @author marcus.arenhardt
  */
 public class Estilo {
-    
+
     private int id;
     private String nomeEstilo;
 
@@ -28,5 +28,7 @@ public class Estilo {
     public void setNomeEstilo(String nomeEstilo) {
         this.nomeEstilo = nomeEstilo;
     }
-    
+
+
+
 }

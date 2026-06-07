@@ -4,17 +4,27 @@
  */
 package com.mycompany.tattooflow.View;
 
+import apoio.ComboItem;
+import com.mycompany.tattooflow.Controller.TatuagemController;
+import com.mycompany.tattooflow.Model.DAO.CombosDAO;
+import java.util.ArrayList;
+
 /**
  *
  * @author marcus.arenhardt
  */
 public class TelaTatuagem extends javax.swing.JInternalFrame {
 
+    TatuagemController tc = new TatuagemController();
+    CombosDAO combosDAO = new CombosDAO();
+    private int idEditando = -1;
+
     /**
      * Creates new form TelaTatuagem
      */
     public TelaTatuagem() {
         initComponents();
+        montaTabela();
     }
 
     /**
@@ -31,14 +41,18 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtTatuagemCriador = new javax.swing.JTextField();
         txtDesTatuagem = new javax.swing.JTextField();
         txtDataCriacaoTatuagem = new javax.swing.JTextField();
         bntSalvarTatuagem = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cmbTatuador = new javax.swing.JComboBox<>();
+        cmbEstilo = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         bntVisualizarTatuagens = new javax.swing.JButton();
+        bntExcluir = new javax.swing.JButton();
+        bntEditar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -46,15 +60,43 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Data de Criação:");
 
-        jLabel3.setText("Tatuador Criador:");
+        jLabel3.setText("Tatuador Criador");
 
-        txtDesTatuagem.addActionListener(new java.awt.event.ActionListener() {
+        bntSalvarTatuagem.setText("Salvar");
+        bntSalvarTatuagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDesTatuagemActionPerformed(evt);
+                bntSalvarTatuagemActionPerformed(evt);
             }
         });
 
-        bntSalvarTatuagem.setText("Salvar");
+        jLabel4.setText("Estilo da Tatuagem");
+
+        cmbTatuador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTatuador.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbTatuadorPopupMenuWillBecomeVisible(evt);
+            }
+        });
+        cmbTatuador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTatuadorActionPerformed(evt);
+            }
+        });
+
+        cmbEstilo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstilo.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbEstiloPopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,20 +106,26 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataCriacaoTatuagem, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDesTatuagem))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTatuagemCriador))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bntSalvarTatuagem)))
+                        .addComponent(bntSalvarTatuagem))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDataCriacaoTatuagem)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cmbTatuador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cmbEstilo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(83, 83, 83)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -89,16 +137,20 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
                     .addComponent(txtDesTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(txtDataCriacaoTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtTatuagemCriador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtDataCriacaoTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbTatuador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(bntSalvarTatuagem)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addGap(129, 129, 129))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -117,6 +169,25 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         bntVisualizarTatuagens.setText("Visualizar");
+        bntVisualizarTatuagens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntVisualizarTatuagensActionPerformed(evt);
+            }
+        });
+
+        bntExcluir.setText("Excluir");
+        bntExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluirActionPerformed(evt);
+            }
+        });
+
+        bntEditar.setText("Editar");
+        bntEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -125,7 +196,10 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bntVisualizarTatuagens)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bntVisualizarTatuagens)
+                    .addComponent(bntExcluir)
+                    .addComponent(bntEditar))
                 .addGap(0, 8, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -134,8 +208,12 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(167, 167, 167)
+                .addGap(110, 110, 110)
                 .addComponent(bntVisualizarTatuagens)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bntExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bntEditar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -145,7 +223,7 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,17 +233,154 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDesTatuagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesTatuagemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDesTatuagemActionPerformed
+    private void cmbTatuadorPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbTatuadorPopupMenuWillBecomeVisible
+        combosDAO.popularCombo("tatuadores", cmbTatuador);
+    }//GEN-LAST:event_cmbTatuadorPopupMenuWillBecomeVisible
 
+    private void cmbEstiloPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbEstiloPopupMenuWillBecomeVisible
+        combosDAO.popularCombo("estilos", cmbEstilo);
+    }//GEN-LAST:event_cmbEstiloPopupMenuWillBecomeVisible
+
+    private void bntSalvarTatuagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarTatuagemActionPerformed
+        ComboItem tatuadorSelecionado = (ComboItem) cmbTatuador.getSelectedItem();
+        ComboItem estiloSelecionado = (ComboItem) cmbEstilo.getSelectedItem();
+
+        if (tatuadorSelecionado == null || tatuadorSelecionado.getCodigo() == 0
+                || estiloSelecionado == null || estiloSelecionado.getCodigo() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um tatuador e um estilo!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        com.mycompany.tattooflow.Model.Tatuagem t = new com.mycompany.tattooflow.Model.Tatuagem();
+        t.setDescricao(txtDesTatuagem.getText());
+        t.setDataCriacao(txtDataCriacaoTatuagem.getText());
+        t.setTatuadorId(tatuadorSelecionado.getCodigo());
+        t.setEstiloId(estiloSelecionado.getCodigo());
+
+        boolean retorno;
+
+        if (idEditando != -1) {
+            t.setId(idEditando);
+            retorno = tc.editar(t);
+            idEditando = -1;
+        } else {
+            retorno = tc.salvar(t);
+        }
+
+        if (retorno) {
+            txtDesTatuagem.setText("");
+            txtDataCriacaoTatuagem.setText("");
+            txtDesTatuagem.requestFocus();
+            montaTabela();
+        }
+    }//GEN-LAST:event_bntSalvarTatuagemActionPerformed
+
+    private void bntVisualizarTatuagensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVisualizarTatuagensActionPerformed
+        montaTabela();
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_bntVisualizarTatuagensActionPerformed
+
+    private void bntExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma tatuagem para excluir!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String idString = String.valueOf(jTable1.getValueAt(linhaSelecionada, 0));
+        int id = Integer.parseInt(idString);
+        boolean retorno = tc.excluir(id);
+        if (retorno) {
+            montaTabela();
+        }
+    }//GEN-LAST:event_bntExcluirActionPerformed
+
+    private void bntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma tatuagem para editar!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        txtDesTatuagem.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 3)));
+        txtDataCriacaoTatuagem.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 4)));
+        idEditando = Integer.parseInt(String.valueOf(jTable1.getValueAt(linhaSelecionada, 0)));
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_bntEditarActionPerformed
+
+    private void cmbTatuadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTatuadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTatuadorActionPerformed
+
+    private void montaTabela() {
+        ArrayList<com.mycompany.tattooflow.Model.Tatuagem> tatuagens = tc.recuperarTodos();
+        if (tatuagens == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ocorreu um erro ao consultar as tatuagens", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } else {
+            jTable1.setModel(new javax.swing.table.AbstractTableModel() {
+                @Override
+                public String getColumnName(int column) {
+                    switch (column) {
+                        case 0:
+                            return "ID";
+                        case 1:
+                            return "Tatuador ID";
+                        case 2:
+                            return "Estilo ID";
+                        case 3:
+                            return "Descrição";
+                        case 4:
+                            return "Data Criação";
+                        default:
+                            return "";
+                    }
+                }
+
+                @Override
+                public int getColumnCount() {
+                    return 5;
+                }
+
+                @Override
+                public int getRowCount() {
+                    return tatuagens.size();
+                }
+
+                @Override
+                public Object getValueAt(int rowIndex, int columnIndex) {
+                    com.mycompany.tattooflow.Model.Tatuagem tat = tatuagens.get(rowIndex);
+                    if (tat != null) {
+                        switch (columnIndex) {
+                            case 0:
+                                return tat.getId();
+                            case 1:
+                                return tat.getTatuadorId();
+                            case 2:
+                                return tat.getEstiloId();
+                            case 3:
+                                return tat.getDescricao();
+                            case 4:
+                                return tat.getDataCriacao();
+                        }
+                    }
+                    return "n/d";
+                }
+            });
+            jTable1.getColumnModel().getColumn(0).setMinWidth(40);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntEditar;
+    private javax.swing.JButton bntExcluir;
     private javax.swing.JButton bntSalvarTatuagem;
     private javax.swing.JButton bntVisualizarTatuagens;
+    private javax.swing.JComboBox<String> cmbEstilo;
+    private javax.swing.JComboBox<String> cmbTatuador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -173,6 +388,5 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtDataCriacaoTatuagem;
     private javax.swing.JTextField txtDesTatuagem;
-    private javax.swing.JTextField txtTatuagemCriador;
     // End of variables declaration//GEN-END:variables
 }

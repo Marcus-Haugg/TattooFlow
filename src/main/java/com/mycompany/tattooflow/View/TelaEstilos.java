@@ -42,6 +42,7 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         bntVisualizarEstilos = new javax.swing.JButton();
         bntExcluir = new javax.swing.JButton();
+        bntEditar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -106,6 +107,13 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
             }
         });
 
+        bntEditar.setText("Editar");
+        bntEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -116,7 +124,8 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bntVisualizarEstilos)
-                    .addComponent(bntExcluir))
+                    .addComponent(bntExcluir)
+                    .addComponent(bntEditar))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,7 +139,9 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
                         .addGap(103, 103, 103)
                         .addComponent(bntVisualizarEstilos)
                         .addGap(18, 18, 18)
-                        .addComponent(bntExcluir)))
+                        .addComponent(bntExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(bntEditar)))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
@@ -179,6 +190,10 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
     }
     }//GEN-LAST:event_bntExcluirActionPerformed
 
+    private void bntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bntEditarActionPerformed
+
     private void montaTabela() {
     ArrayList<Estilo> estilos = ec.recuperarTodos();
     if (estilos == null) {
@@ -223,6 +238,7 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntEditar;
     private javax.swing.JButton bntExcluir;
     private javax.swing.JButton bntSalvarEstilo;
     private javax.swing.JButton bntVisualizarEstilos;

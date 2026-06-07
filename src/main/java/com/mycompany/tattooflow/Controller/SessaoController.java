@@ -4,8 +4,8 @@
  */
 package com.mycompany.tattooflow.Controller;
 
-import com.mycompany.tattooflow.Model.Estilo;
-import com.mycompany.tattooflow.Model.DAO.EstiloDAO;
+import com.mycompany.tattooflow.Model.DAO.SessaoDAO;
+import com.mycompany.tattooflow.Model.Sessao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,45 +13,45 @@ import java.util.ArrayList;
  *
  * @author marcus
  */
-public class EstiloController {
+public class SessaoController {
 
-    EstiloDAO estiloDAO = new EstiloDAO();
+    SessaoDAO sessaoDAO = new SessaoDAO();
 
-    public boolean salvar(Estilo e) {
+    public boolean salvar(Sessao s) {
         try {
-            estiloDAO.salvar(e);
+            sessaoDAO.salvar(s);
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao salvar estilo: " + ex.getMessage());
+            System.out.println("Erro ao salvar sessao: " + ex.getMessage());
             return false;
         }
     }
 
-    public ArrayList<Estilo> recuperarTodos() {
+    public ArrayList<Sessao> recuperarTodos() {
         try {
-            return estiloDAO.recuperarTodos();
+            return sessaoDAO.recuperarTodos();
         } catch (SQLException ex) {
-            System.out.println("Erro ao recuperar estilos: " + ex.getMessage());
+            System.out.println("Erro ao recuperar sessoes: " + ex.getMessage());
             return null;
         }
     }
 
     public boolean excluir(int id) {
         try {
-            estiloDAO.excluir(id);
+            sessaoDAO.excluir(id);
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao excluir estilo: " + ex.getMessage());
+            System.out.println("Erro ao excluir sessao: " + ex.getMessage());
             return false;
         }
     }
 
-    public boolean editar(Estilo e) {
+    public boolean editar(Sessao s) {
         try {
-            estiloDAO.editar(e);
+            sessaoDAO.editar(s);
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao editar estilo: " + ex.getMessage());
+            System.out.println("Erro ao editar sessao: " + ex.getMessage());
             return false;
         }
     }

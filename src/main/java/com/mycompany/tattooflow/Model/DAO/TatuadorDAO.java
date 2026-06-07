@@ -48,5 +48,15 @@ public void excluir(int id) throws SQLException {
     System.out.println("sql: " + sql);
     ConexaoBD.executeUpdate(sql);
 }
+
+public void editar(Tatuador t) throws SQLException {
+    String sql = "UPDATE tatuadores SET "
+            + "nome = '" + t.getNome() + "',"
+            + "email = '" + t.getEmail() + "',"
+            + "celular = '" + t.getCelular() + "'"
+            + " WHERE id = " + t.getId();
+    System.out.println("sql: " + sql);
+    ConexaoBD.executeUpdate(sql);
+}
     
 }

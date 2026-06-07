@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TelaTatuador extends javax.swing.JInternalFrame {
 
     TatuadorController tc = new TatuadorController();
+    private int idEditando = -1; // -1 significa que não está editando
 
     /**
      * Creates new form TelaTatuador
@@ -103,6 +104,7 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         btnVisualizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -192,6 +194,13 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -202,7 +211,8 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVisualizar)
-                    .addComponent(btnExcluir))
+                    .addComponent(btnExcluir)
+                    .addComponent(btnEditar))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -215,6 +225,8 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
                 .addComponent(btnVisualizar)
                 .addGap(18, 18, 18)
                 .addComponent(btnExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEditar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -252,15 +264,22 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
 
     private void bntSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarActionPerformed
         Tatuador tat = new Tatuador();
-        String nome = txtNomeTatuador.getText();
-        String email = txtEmailTatuador1.getText();
-        String celular = txtCelularTatuador.getText();
+        tat.setNome(txtNomeTatuador.getText());
+        tat.setEmail(txtEmailTatuador1.getText());
+        tat.setCelular(txtCelularTatuador.getText());
 
-        tat.setNome(nome);
-        tat.setEmail(email);
-        tat.setCelular(celular);
+        boolean retorno;
 
-        boolean retorno = tc.salvar(tat);
+        if (idEditando != -1) {
+            // Está editando
+            tat.setId(idEditando);
+            retorno = tc.editar(tat);
+            idEditando = -1;
+        } else {
+            // Está salvando novo
+            retorno = tc.salvar(tat);
+        }
+
         if (retorno) {
             txtNomeTatuador.setText("");
             txtEmailTatuador1.setText("");
@@ -272,9 +291,25 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_bntSalvarActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um tatuador para editar!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Pega os dados da linha selecionada e preenche os campos
+        txtNomeTatuador.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 1)));
+        txtEmailTatuador1.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 2)));
+        txtCelularTatuador.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 3)));
+        // Guarda o ID e troca para a aba de cadastro
+        idEditando = Integer.parseInt(String.valueOf(jTable1.getValueAt(linhaSelecionada, 0)));
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntSalvar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;

@@ -46,4 +46,12 @@ public class EstiloDAO {
         ConexaoBD.executeUpdate(sql);
     }
 
+    public void editar(Estilo e) throws SQLException {
+        String sql = "UPDATE estilos SET "
+                + "nome_estilo = '" + e.getNomeEstilo() + "'"
+                + " WHERE id = " + e.getId();
+        System.out.println("sql: " + sql);
+        ConexaoBD.executeUpdate(sql);
+    }
+
 }

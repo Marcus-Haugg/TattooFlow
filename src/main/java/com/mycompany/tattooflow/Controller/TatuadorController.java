@@ -44,4 +44,15 @@ public boolean excluir(int id) {
         return false;
     }
 }
+
+public boolean  editar(Tatuador t){
+    try {
+        tatuadorDAO.editar(t);
+        return true;
+    } catch (SQLException ex){
+        System.out.println("Erro ao editar tatuador:" + ex.getMessage());
+         return false;
+        
+    }
+}
 }
