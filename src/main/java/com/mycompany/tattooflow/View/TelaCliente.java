@@ -4,8 +4,13 @@
  */
 package com.mycompany.tattooflow.View;
 
+import apoio.Formatacao;
+import apoio.Mensagem;
+import apoio.Validacao;
 import com.mycompany.tattooflow.Controller.ClienteController;
 import com.mycompany.tattooflow.Model.Cliente;
+import apoio.PDFManager;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +28,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     public TelaCliente() {
         initComponents();
         montaTabela();
+        Formatacao.formatarCpf(txtCpfCli);
+        Formatacao.formatarTelefone(txtCelularCli);
+        Formatacao.formatarData(txtDataNasc);
     }
 
     /**
@@ -37,33 +45,32 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtNomeCli = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtCpfCli = new javax.swing.JTextPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtDataNasc = new javax.swing.JTextPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        txtCelularCli = new javax.swing.JTextPane();
         bntSalvarCli = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        txtEmailCli = new javax.swing.JTextPane();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txtNomeCli = new javax.swing.JTextPane();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        txtCpfCli = new javax.swing.JFormattedTextField();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        txtCelularCli = new javax.swing.JFormattedTextField();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        txtEmailCli1 = new javax.swing.JTextPane();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        txtDataNasc = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         bntVisualizarCli = new javax.swing.JButton();
         bntExcluirCli = new javax.swing.JButton();
         bntEditar = new javax.swing.JButton();
+        bntPDF = new javax.swing.JButton();
 
         setClosable(true);
 
         jLabel1.setText("Nome:");
-
-        jScrollPane1.setViewportView(txtNomeCli);
 
         jLabel2.setText("CPF:");
 
@@ -73,12 +80,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Data de Nascimento:");
 
-        jScrollPane2.setViewportView(txtCpfCli);
-
-        jScrollPane3.setViewportView(txtDataNasc);
-
-        jScrollPane5.setViewportView(txtCelularCli);
-
         bntSalvarCli.setText("Salvar");
         bntSalvarCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,7 +87,15 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jScrollPane6.setViewportView(txtEmailCli);
+        jScrollPane7.setViewportView(txtNomeCli);
+
+        jScrollPane8.setViewportView(txtCpfCli);
+
+        jScrollPane9.setViewportView(txtCelularCli);
+
+        jScrollPane10.setViewportView(txtEmailCli1);
+
+        jScrollPane11.setViewportView(txtDataNasc);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,26 +105,26 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(jScrollPane7)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bntSalvarCli)))
+                        .addComponent(bntSalvarCli))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,27 +132,27 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(bntSalvarCli))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(173, Short.MAX_VALUE))
         );
 
@@ -178,6 +187,13 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        bntPDF.setText("Gerar PDF");
+        bntPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -185,11 +201,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bntVisualizarCli)
                     .addComponent(bntExcluirCli)
-                    .addComponent(bntEditar))
+                    .addComponent(bntEditar)
+                    .addComponent(bntPDF))
                 .addGap(38, 38, 38))
         );
         jPanel2Layout.setVerticalGroup(
@@ -204,7 +221,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(bntExcluirCli)
                         .addGap(18, 18, 18)
-                        .addComponent(bntEditar)))
+                        .addComponent(bntEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bntPDF)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -230,10 +249,23 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntSalvarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarCliActionPerformed
+        if (txtNomeCli.getText().trim().isEmpty() || txtEmailCli1.getText().trim().isEmpty()) {
+            Mensagem.aviso("Preencha todos os campos obrigatórios!");
+            return;
+        }
+        String cpfLimpo = Formatacao.removerFormatacao(txtCpfCli.getText()).trim();
+        if (cpfLimpo.isEmpty()) {
+            Mensagem.aviso("Preencha o CPF!");
+            return;
+        }
+        if (!Validacao.validarCPF(cpfLimpo)) {
+            Mensagem.aviso("CPF inválido!");
+            return;
+        }
         Cliente cli = new Cliente();
         cli.setNome(txtNomeCli.getText());
         cli.setCpf(txtCpfCli.getText());
-        cli.setEmail(txtEmailCli.getText());
+        cli.setEmail(txtEmailCli1.getText());
         cli.setCelular(txtCelularCli.getText());
         cli.setData_nasc(txtDataNasc.getText());
 
@@ -252,7 +284,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         if (retorno) {
             txtNomeCli.setText("");
             txtCpfCli.setText("");
-            txtEmailCli.setText("");
+            txtEmailCli1.setText("");
             txtCelularCli.setText("");
             txtDataNasc.setText("");
             txtNomeCli.requestFocus();
@@ -282,7 +314,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         // Pega os dados da linha selecionada e preenche os campos
         txtNomeCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 1)));
         txtCpfCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 2)));
-        txtEmailCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 3)));
+        txtEmailCli1.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 3)));
         txtCelularCli.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 4)));
         txtDataNasc.setText(String.valueOf(jTable1.getValueAt(linhaSelecionada, 5)));
 
@@ -290,6 +322,16 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         idEditando = Integer.parseInt(String.valueOf(jTable1.getValueAt(linhaSelecionada, 0)));
         jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_bntEditarActionPerformed
+
+    private void bntPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntPDFActionPerformed
+        ArrayList<Cliente> lista = c.recuperarTodos();
+        try {
+            PDFManager.gerar(lista, "clientes.pdf");
+            Mensagem.informacao("PDF gerado: clientes.pdf");
+        } catch (IOException ex) {
+            Mensagem.erro("Erro ao gerar PDF: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_bntPDFActionPerformed
 
     private void montaTabela() {
         ArrayList<Cliente> clientes = c.recuperarTodos();
@@ -361,6 +403,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntEditar;
     private javax.swing.JButton bntExcluirCli;
+    private javax.swing.JButton bntPDF;
     private javax.swing.JButton bntSalvarCli;
     private javax.swing.JButton bntVisualizarCli;
     private javax.swing.JLabel jLabel1;
@@ -370,18 +413,18 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextPane txtCelularCli;
-    private javax.swing.JTextPane txtCpfCli;
-    private javax.swing.JTextPane txtDataNasc;
-    private javax.swing.JTextPane txtEmailCli;
+    private javax.swing.JFormattedTextField txtCelularCli;
+    private javax.swing.JFormattedTextField txtCpfCli;
+    private javax.swing.JFormattedTextField txtDataNasc;
+    private javax.swing.JTextPane txtEmailCli1;
     private javax.swing.JTextPane txtNomeCli;
     // End of variables declaration//GEN-END:variables
 

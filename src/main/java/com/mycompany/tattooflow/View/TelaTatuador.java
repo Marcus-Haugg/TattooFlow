@@ -4,8 +4,12 @@
  */
 package com.mycompany.tattooflow.View;
 
+import apoio.Formatacao;
+import apoio.Mensagem;
+import apoio.PDFManager;
 import com.mycompany.tattooflow.Controller.TatuadorController;
 import com.mycompany.tattooflow.Model.Tatuador;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +26,7 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
      */
     public TelaTatuador() {
         initComponents();
+        Formatacao.formatarTelefone(txtCelularTatuador);
         montaTabela();
     }
 
@@ -95,16 +100,20 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNomeTatuador = new javax.swing.JTextField();
-        txtCelularTatuador = new javax.swing.JTextField();
-        txtEmailTatuador1 = new javax.swing.JTextField();
         bntSalvar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtEmailTatuador1 = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtNomeTatuador = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtCelularTatuador = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnVisualizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnPDF = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -121,6 +130,12 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane2.setViewportView(txtEmailTatuador1);
+
+        jScrollPane3.setViewportView(txtNomeTatuador);
+
+        jScrollPane4.setViewportView(txtCelularTatuador);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,21 +143,21 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNomeTatuador))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtEmailTatuador1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 491, Short.MAX_VALUE)
+                        .addComponent(bntSalvar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
+                        .addGap(2, 2, 2)
+                        .addComponent(jScrollPane4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCelularTatuador, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bntSalvar)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -151,18 +166,19 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtNomeTatuador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtEmailTatuador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtCelularTatuador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(bntSalvar)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(bntSalvar))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -201,6 +217,13 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
             }
         });
 
+        btnPDF.setText("Gerar PDF");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -212,7 +235,8 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVisualizar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(btnPDF))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -227,6 +251,8 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
                 .addComponent(btnExcluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEditar)
+                .addGap(18, 18, 18)
+                .addComponent(btnPDF)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -263,6 +289,10 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void bntSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarActionPerformed
+        if (txtNomeTatuador.getText().trim().isEmpty() || txtEmailTatuador1.getText().trim().isEmpty()) {
+            Mensagem.aviso("Preencha todos os campos obrigatórios!");
+            return;
+        }
         Tatuador tat = new Tatuador();
         tat.setNome(txtNomeTatuador.getText());
         tat.setEmail(txtEmailTatuador1.getText());
@@ -291,6 +321,16 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_bntSalvarActionPerformed
 
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        ArrayList<Tatuador> lista = tc.recuperarTodos();
+        try {
+            PDFManager.gerar(lista, "tatuadores.pdf");
+            Mensagem.informacao("PDF gerado: tatuadores.pdf");
+        } catch (IOException ex) {
+            Mensagem.erro("Erro ao gerar PDF: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnPDFActionPerformed
+
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int linhaSelecionada = jTable1.getSelectedRow();
         if (linhaSelecionada == -1) {
@@ -311,6 +351,7 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
     private javax.swing.JButton bntSalvar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnPDF;
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -318,10 +359,13 @@ public class TelaTatuador extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtCelularTatuador;
-    private javax.swing.JTextField txtEmailTatuador1;
-    private javax.swing.JTextField txtNomeTatuador;
+    private javax.swing.JFormattedTextField txtCelularTatuador;
+    private javax.swing.JTextPane txtEmailTatuador1;
+    private javax.swing.JTextPane txtNomeTatuador;
     // End of variables declaration//GEN-END:variables
 }

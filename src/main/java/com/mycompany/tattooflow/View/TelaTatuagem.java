@@ -5,6 +5,9 @@
 package com.mycompany.tattooflow.View;
 
 import apoio.ComboItem;
+import apoio.Formatacao;
+import apoio.Mensagem;
+import apoio.Validacao;
 import com.mycompany.tattooflow.Controller.TatuagemController;
 import com.mycompany.tattooflow.Model.DAO.CombosDAO;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
      */
     public TelaTatuagem() {
         initComponents();
+        Formatacao.formatarData(txtDataCriacaoTatuagem);
         montaTabela();
     }
 
@@ -41,12 +45,14 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtDesTatuagem = new javax.swing.JTextField();
-        txtDataCriacaoTatuagem = new javax.swing.JTextField();
         bntSalvarTatuagem = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cmbTatuador = new javax.swing.JComboBox<>();
         cmbEstilo = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDataCriacaoTatuagem = new javax.swing.JFormattedTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDesTatuagem = new javax.swing.JTextPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -98,6 +104,10 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane2.setViewportView(txtDataCriacaoTatuagem);
+
+        jScrollPane3.setViewportView(txtDesTatuagem);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -108,7 +118,7 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDesTatuagem))
+                        .addComponent(jScrollPane3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(bntSalvarTatuagem))
@@ -116,39 +126,40 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDataCriacaoTatuagem)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(cmbTatuador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cmbEstilo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(83, 83, 83)))))
+                                .addGap(83, 83, 83))
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtDesTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtDataCriacaoTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))))
+                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbTatuador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(bntSalvarTatuagem)
                 .addGap(129, 129, 129))
         );
@@ -247,7 +258,19 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
 
         if (tatuadorSelecionado == null || tatuadorSelecionado.getCodigo() == 0
                 || estiloSelecionado == null || estiloSelecionado.getCodigo() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um tatuador e um estilo!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            Mensagem.aviso("Selecione um tatuador e um estilo!");
+            return;
+        }
+        if (txtDesTatuagem.getText().trim().isEmpty()) {
+            Mensagem.aviso("Preencha a descrição da tatuagem!");
+            return;
+        }
+        if (txtDataCriacaoTatuagem.getText().replaceAll("[^0-9]", "").length() < 8) {
+            Mensagem.aviso("Preencha a data de criação!");
+            return;
+        }
+        if (!Validacao.validarDataFormatada(txtDataCriacaoTatuagem.getText())) {
+            Mensagem.aviso("Data de criação inválida!");
             return;
         }
 
@@ -384,9 +407,11 @@ public class TelaTatuagem extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtDataCriacaoTatuagem;
-    private javax.swing.JTextField txtDesTatuagem;
+    private javax.swing.JFormattedTextField txtDataCriacaoTatuagem;
+    private javax.swing.JTextPane txtDesTatuagem;
     // End of variables declaration//GEN-END:variables
 }

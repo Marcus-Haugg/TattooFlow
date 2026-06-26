@@ -4,6 +4,7 @@
  */
 package com.mycompany.tattooflow.View;
 
+import apoio.Mensagem;
 import com.mycompany.tattooflow.Controller.EstiloController;
 import com.mycompany.tattooflow.Model.Estilo;
 import java.util.ArrayList;
@@ -35,8 +36,9 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNomeEstilos = new javax.swing.JTextField();
         bntSalvarEstilo = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtNomeEstilos = new javax.swing.JTextPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -55,6 +57,8 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane2.setViewportView(txtNomeEstilos);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -64,8 +68,8 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNomeEstilos, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(bntSalvarEstilo)))
@@ -74,13 +78,13 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(txtNomeEstilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(bntSalvarEstilo)
-                .addContainerGap(332, Short.MAX_VALUE))
+                .addContainerGap(335, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -162,6 +166,10 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntSalvarEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarEstiloActionPerformed
+        if (txtNomeEstilos.getText().trim().isEmpty()) {
+            Mensagem.aviso("Preencha o nome do estilo!");
+            return;
+        }
         Estilo e = new Estilo();
     String nomeEstilo = txtNomeEstilos.getText();
 
@@ -246,8 +254,9 @@ public class TelaEstilos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtNomeEstilos;
+    private javax.swing.JTextPane txtNomeEstilos;
     // End of variables declaration//GEN-END:variables
 }

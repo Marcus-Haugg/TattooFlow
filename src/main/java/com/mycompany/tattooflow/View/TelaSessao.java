@@ -5,6 +5,8 @@
 package com.mycompany.tattooflow.View;
 
 import apoio.ComboItem;
+import apoio.Formatacao;
+import apoio.Mensagem;
 import com.mycompany.tattooflow.Controller.SessaoController;
 import com.mycompany.tattooflow.Model.DAO.CombosDAO;
 import com.mycompany.tattooflow.Model.Sessao;
@@ -25,6 +27,14 @@ public class TelaSessao extends javax.swing.JInternalFrame {
      */
     public TelaSessao() {
         initComponents();
+        try {
+            javax.swing.text.MaskFormatter m = new javax.swing.text.MaskFormatter();
+            m.setPlaceholderCharacter(' ');
+            m.setMask("##/##/#### ##:##");
+            txtDataHoraSessao.setFormatterFactory(null);
+            txtDataHoraSessao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(m));
+            txtDataHoraSessao.setValue(null);
+        } catch (Exception e) { System.err.println(e); }
         montaTabela();
     }
 
@@ -42,9 +52,6 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtDataHoraSessao = new javax.swing.JTextField();
-        txtDuracaoMinSessao = new javax.swing.JTextField();
-        txtDescSessao = new javax.swing.JTextField();
         bntSalvarSessao = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -52,6 +59,12 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         cmbTatuador = new javax.swing.JComboBox<>();
         cmbCliente = new javax.swing.JComboBox<>();
         cmbTatuagem = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDuracaoMinSessao = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDataHoraSessao = new javax.swing.JFormattedTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtDescSessao = new javax.swing.JTextPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -113,39 +126,18 @@ public class TelaSessao extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane2.setViewportView(txtDuracaoMinSessao);
+
+        jScrollPane3.setViewportView(txtDataHoraSessao);
+
+        jScrollPane4.setViewportView(txtDescSessao);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDataHoraSessao))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDuracaoMinSessao, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDescSessao)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5)
-                                        .addGap(164, 164, 164)
-                                        .addComponent(jLabel6)
-                                        .addGap(28, 28, 28))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(cmbTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,6 +148,38 @@ public class TelaSessao extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(bntSalvarSessao)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addGap(164, 164, 164)
+                                .addComponent(jLabel6)
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cmbTatuagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane4)
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(2, 2, 2)
+                                .addComponent(jScrollPane3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,15 +187,15 @@ public class TelaSessao extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtDataHoraSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtDuracaoMinSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtDescSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -287,7 +311,15 @@ public class TelaSessao extends javax.swing.JInternalFrame {
         if (clienteSelecionado == null || clienteSelecionado.getCodigo() == 0
                 || tatuadorSelecionado == null || tatuadorSelecionado.getCodigo() == 0
                 || tatuagemSelecionada == null || tatuagemSelecionada.getCodigo() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecione cliente, tatuador e tatuagem!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            Mensagem.aviso("Selecione cliente, tatuador e tatuagem!");
+            return;
+        }
+        if (txtDataHoraSessao.getText().replaceAll("[^0-9]", "").length() < 12) {
+            Mensagem.aviso("Preencha a data e hora da sessão!");
+            return;
+        }
+        if (txtDuracaoMinSessao.getText().trim().isEmpty()) {
+            Mensagem.aviso("Preencha a duração em minutos!");
             return;
         }
 
@@ -437,10 +469,13 @@ public class TelaSessao extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtDataHoraSessao;
-    private javax.swing.JTextField txtDescSessao;
-    private javax.swing.JTextField txtDuracaoMinSessao;
+    private javax.swing.JFormattedTextField txtDataHoraSessao;
+    private javax.swing.JTextPane txtDescSessao;
+    private javax.swing.JTextPane txtDuracaoMinSessao;
     // End of variables declaration//GEN-END:variables
 }
